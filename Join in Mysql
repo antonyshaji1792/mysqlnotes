@@ -1,0 +1,44 @@
+<?php 
+	require('DbConnect.php');
+	$db = new DbConnect;
+	$conn = $db->connect();
+	
+	// $sql = 'SELECT * from fbusers';
+	//To select all fields in Inner Join
+	// $sql = 'SELECT * FROM fbusers as f INNER JOIN sociallogins as s ON (f.id = s.id)';
+	//To select only required fields 
+	// $sql = 'SELECT f.email, s.id FROM fbusers as f INNER JOIN sociallogins as s ON (f.id = s.id)';
+
+// Inner join will get only matching records from two tables on condition It is also called as strict join . If you remove INNER instead of INNER JOIN it will also work.
+
+	// $sql = 'SELECT * FROM fbusers as f LEFT OUTER JOIN sociallogins as s ON (f.id = s.id)';
+
+//Has all the values from the Left tables, if somethings missing on the right it shows as null. LEFT OUTER JOIN same as LEFT JOIN
+
+//full outer join wont work in mysql so we use both left and right join. UNION ALL will have the duplicate values also
+
+
+	// $sql = 'SELECT * FROM fbusers as f LEFT OUTER JOIN sociallogins as s ON (f.id = s.id)
+	
+	// 	UNION
+
+	// SELECT * FROM fbusers as f RIGHT OUTER JOIN sociallogins as s ON (f.id = s.id)';
+
+
+// $sql = 'SELECT * FROM fbusers as f CROSS JOIN sociallogins as s';
+
+// Each row of first table combined with every row on the second table.
+
+// $sql = 'SELECT * FROM fbusers as f JOIN sociallogins as s on (f.id = s.id)';
+
+//Above is called self join. use distinct to avoid duplicates
+
+
+
+
+	$stmt = $conn->prepare($sql);
+	$stmt->execute();
+	$fbusers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	echo '<pre>';
+	print_r($fbusers);
+
